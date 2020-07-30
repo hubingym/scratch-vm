@@ -1,12 +1,29 @@
 {
-  "name": "playground",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "start": "parcel serve index.html --open"
-  },
-  "devDependencies": {
-    "parcel-bundler": "^1.12.4"
-  }
+    "name": "playground",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "start": "parcel serve index.html --open"
+    },
+    "dependencies": {
+        "antd": "4.3.5",
+        "lodash.debounce": "^4.0.8",
+        "react": "16.13.1",
+        "react-dom": "16.13.1"
+    },
+    "devDependencies": {
+        "@types/lodash.debounce": "4.0.6",
+        "@types/node": "12.12.6",
+        "@types/react": "16.9.41",
+        "@types/react-dom": "16.9.8",
+        "less": "^3.12.2",
+        "parcel-bundler": "^1.12.4",
+        "parcel-plugin-html-externals": "^0.2.0",
+        "parcel-plugin-static-files-copy": "^2.4.3"
+    },
+    "externals": {
+        "./antd.css": false,
+        "./scratch-blocks/**/*": false
+    }
 }

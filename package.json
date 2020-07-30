@@ -1,8 +1,8 @@
 {
   "name": "scratch-vm",
   "version": "1.0.0",
-  "main": "dist/vm.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/scratch-runtime.js",
+  "types": "dist/engine/runtime.d.ts",
   "repository": "https://github.com/hubingym/scratch-vm",
   "author": "binghu <365356015@qq.com>",
   "license": "MIT",
@@ -12,13 +12,18 @@
     "test": "jest",
     "coverage": "jest --coverage"
   },
-  "dependencies": {},
+  "dependencies": {
+    "minilog": "3.1.0"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@types/jest": "^26.0.5",
+    "@types/minilog": "^2.0.29",
     "jest": "^26.1.0",
     "rollup": "^2.22.1",
+    "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-typescript2": "^0.27.1",
     "ts-jest": "^26.1.3",
     "tslib": "^2.0.0",

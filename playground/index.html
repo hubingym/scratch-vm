@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Playground</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground</title>
+    <link rel="stylesheet" href="./antd.css">
 </head>
+
 <body>
-  Playground
-  <script src="./main.ts"></script>
+    <div id="root"></div>
+
+    <script src="./scratch-blocks/blockly_vertical.js"></script>
+    <script src="./scratch-blocks/blocks_vertical.js"></script>
+    <script src="./scratch-blocks/msg/messages.js"></script>
+    <script src="./scratch-blocks/msg/scratch_msgs.js"></script>
+    <script>
+        Blockly.ScratchMsgs.setLocale('zh-cn');
+        window.blocklyLoaded = true;
+    </script>
+    <script src="./main.tsx"></script>
 </body>
+
 </html>
