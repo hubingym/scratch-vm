@@ -4,14 +4,9 @@ import execute from './execute';
 import Sequencer from './sequencer';
 import BlocksRuntimeCache from './blocks-runtime-cache';
 import Variable from './variable';
-import BlockUtility from './block-utility';
+// import BlockUtility from './block-utility';
 import StringUtil from '../util/string-util';
 import uid from '../util/uid';
-
-export {
-    BlockUtility,
-    Target,
-}
 
 interface IHatMeta {
     restartExistingThreads: boolean;
@@ -22,12 +17,12 @@ interface IHatsMeta {
     [key: string]: IHatMeta;
 }
 
-export interface IBlockPackage {
+interface IBlockPackage {
     getPrimitives: () => { [key: string]: Function };
     getHats?: () => IHatsMeta;
 }
 
-export interface IBlockPackageConstructor {
+interface IBlockPackageConstructor {
     new(): IBlockPackage;
 }
 

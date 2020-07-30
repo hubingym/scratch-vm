@@ -32,7 +32,7 @@ const configBlockPackages = {
     input: 'src/blocks/packages.ts',
     output: {
         file: 'dist/scratch-packages.js',
-        name: 'ScratchBlockPackages',
+        name: 'defaultBlockPackages',
         format: 'umd',
         strict: false,
     },
