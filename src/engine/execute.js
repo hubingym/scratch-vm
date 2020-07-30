@@ -111,6 +111,7 @@ const handlePromise = (primitiveReportedValue, sequencer, thread, blockCached, l
                 if (popped === null) {
                     return;
                 }
+                sequencer.runtime.glowBlock(popped, false);
                 nextBlockId = thread.target.blocks.getNextBlock(popped);
                 if (nextBlockId !== null) {
                     // A next block exists so break out this loop
