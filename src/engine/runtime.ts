@@ -30,6 +30,7 @@ interface IRuntimeOptions {
     target?: Target;
     blockPackages: { [key: string]: IBlockPackageConstructor };
     getWorkspaceDom: () => Element; // 返回workspace里面的xml dom
+    getDynamicOpcodeFunction?: ((opcode: string) => Function); // 返回运行时动态获取opcode function
     onRunStart: () => void; // 开始运行的回调
     onRunStop: () => void; // 停止运行的回调
     onGlowBlock: (blockId: string, isGlowing: boolean) => void; // 用于高亮某个程序块
@@ -43,11 +44,13 @@ interface IOpts {
 }
 
 class Runtime {
+    // 运行时动态获取opcode function
+    getDynamicOpcodeFunction?: ((opcode: string) => Function);
     profiler = null; // NOTICE: 很重要,不能删除,且必须为null
     target = new Target(this, null);
     threads: Thread[] = [];
     sequencer = new Sequencer(this);
-    _primitives: { [key: string]: IBlockPackage } = {};
+    _primitives: { [key: string]: Function } = {};
     _hats: IHatsMeta = {};
     currentStepTime = Runtime.THREAD_STEP_INTERVAL;
     _steppingInterval?: NodeJS.Timeout;
@@ -58,6 +61,7 @@ class Runtime {
 
     constructor(private options: IRuntimeOptions) {
         if (options.target) this.target = options.target; // 用户自定义target
+        this.getDynamicOpcodeFunction = options.getDynamicOpcodeFunction;
         this.registerBlockPackages(options.blockPackages);
         const blocksDOM = options.getWorkspaceDom();
         const variableList = this.target.blocks.createScripts(blocksDOM);
@@ -98,7 +102,11 @@ class Runtime {
     }
 
     getOpcodeFunction(opcode: string) {
-        return this._primitives[opcode];
+        let fun = this._primitives[opcode];
+        if (!fun && this.getDynamicOpcodeFunction != null) {
+            fun = this.getDynamicOpcodeFunction(opcode);
+        }
+        return fun;
     }
 
     getIsHat(opcode: string) {
