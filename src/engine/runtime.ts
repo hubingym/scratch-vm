@@ -18,7 +18,7 @@ interface IHatsMeta {
 }
 
 interface IBlockPackage {
-    getPrimitives: () => { [key: string]: Function };
+    getPrimitives?: () => { [key: string]: Function };
     getHats?: () => IHatsMeta;
 }
 
@@ -30,7 +30,8 @@ interface IRuntimeOptions {
     target?: Target;
     blockPackages: { [key: string]: IBlockPackageConstructor };
     getWorkspaceDom: () => Element; // 返回workspace里面的xml dom
-    getDynamicOpcodeFunction?: ((opcode: string) => Function); // 返回运行时动态获取opcode function
+    getDynamicBlocksHats?: () => IHatsMeta; // 动态块的hats信息
+    getDynamicOpcodeFunction?: ((opcode: string) => Function); // 运行时动态获取opcode function
     onRunStart: () => void; // 开始运行的回调
     onRunStop: () => void; // 停止运行的回调
     onGlowBlock: (blockId: string, isGlowing: boolean) => void; // 用于高亮某个程序块
@@ -63,9 +64,16 @@ class Runtime {
         if (options.target) this.target = options.target; // 用户自定义target
         this.getDynamicOpcodeFunction = options.getDynamicOpcodeFunction;
         this.registerBlockPackages(options.blockPackages);
+        if (options.getDynamicBlocksHats) {
+            const hats = options.getDynamicBlocksHats();
+            for (const hatName in hats) {
+                if (hats.hasOwnProperty(hatName)) {
+                    this._hats[hatName] = hats[hatName];
+                }
+            }
+        }
         const blocksDOM = options.getWorkspaceDom();
         const variableList = this.target.blocks.createScripts(blocksDOM);
-        // 创建变量
         variableList.forEach(e => {
             this.target.createVariable(e.varId, e.varName, e.varType, false);
         });
